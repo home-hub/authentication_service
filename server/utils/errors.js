@@ -1,0 +1,13 @@
+import { ApolloError } from 'apollo-server';
+export const BadRequestClientError = new ApolloError('The server cannot or will not process the request due to something that is perceived to be a client error (e.g., malformed request syntax, invalid request message framing, or deceptive request routing).', '400');
+export const UnauthorizedClientError = new ApolloError('The request has not been applied because it lacks valid authentication credentials for the target resource.', '401');
+export const ForbiddenClientError = new ApolloError('The server understood the request but refuses to authorize it.', '403');
+export const NotFoundClientError = new ApolloError('The origin server did not find a current representation for the target resource or is not willing to disclose that one exists.', '404');
+export const MethodNotAllowedClientError = new ApolloError('The method received in the request-line is known by the origin server but not supported by the target resource.', '405');
+export const RequestTimeoutClientError = new ApolloError('The server did not receive a complete request message within the time that it was prepared to wait.', '408');
+export const ConflictClientError = new ApolloError('The request could not be completed due to a conflict with the current state of the target resource. This code is used in situations where the user might be able to resolve the conflict and resubmit the request.', '408');
+export const InternalServerError = new ApolloError('The server encountered an unexpected condition which prevented it from fulfilling the request.', '500');
+export const NotImplementedServerError = new ApolloError('The server does not support the functionality required to fulfill the request.', '501');
+export const BadGatewayServerError = new ApolloError('The server, while acting as a gateway or proxy, received an invalid response from an inbound server it accessed while attempting to fulfill the request.', '502');
+export const SurviceUnavilableServerError = new ApolloError('The server is currently unable to handle the request due to a temporary overload or scheduled maintenance, which will likely be alleviated after some delay.', '503');
+export const GatewayTimeoutServerError = new ApolloError('The server, while acting as a gateway or proxy, did not receive a timely response from an upstream server it needed to access in order to complete the request.', '504');
