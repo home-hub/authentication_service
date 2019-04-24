@@ -1,4 +1,4 @@
-import { UnauthorizedError, ForbiddenClientError, UnauthorizedClientError } from './errors';
+import {  UnauthorizedClientError } from './errors';
 
 export const isAuthorized = next => (root, args, context, info) => {
     if (!context.user) {

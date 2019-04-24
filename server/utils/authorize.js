@@ -1,13 +1,9 @@
 
 import jwt from 'jsonwebtoken';
 
-const attachJwtPayloadToContext = (token) => {
+const attachJwtPayloadToContext = (secret, token) => {
     try {
-        const jwtPayload = jwt.verify(
-            token,
-            "qwertyuiopasdfghjklzxcvbnm123456",
-        );
-    
+        const jwtPayload = jwt.verify(token, secret);
         return {
             user: {
                sub: jwtPayload.sub,
