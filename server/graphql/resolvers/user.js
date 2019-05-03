@@ -14,22 +14,20 @@ export default {
     },
 
     Mutation: {
-      loginUser: async (_, __, {ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET}) => {
+      loginUser: async (_, __, {}) => {
         // handle credentials for user login
         try {
-          return await generateNewTokenPair(ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET)
+          return await generateNewTokenPair()
         } catch(err){
           return InternalServerError
         }
       },
 
-      registerUser: async (_, __, { ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET }) => {
+      registerUser: async (_, __, {}) => {
         // handle credentials for user registration
-        try {
-          return await generateNewTokenPair(ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET)
-        } catch(err){
-          return InternalServerError
-        }
+        
+          return await generateNewTokenPair()
+        
       }
     }
   };
