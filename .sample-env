@@ -1,1 +1,4 @@
-JWT_TOKEN_SECRET=fake_secret
+JWT_ACCESS_TOKEN_SECRET=fakesecret
+JWT_REFRESH_TOKEN_SECRET=fakesecret
+DB_NAME=dbname
+DB_HOST=localhost
