@@ -16,9 +16,7 @@ const server = new ApolloServer({
   typeDefs, 
   resolvers,
   context: ({ req }) => ({
-    ...attachJwtPayloadToContext(ACCESS_TOKEN_SECRET, req.headers[HEADER_NAME]),
-    ACCESS_TOKEN_SECRET: process.env.JWT_ACCESS_TOKEN_SECRET ,
-    REFRESH_TOKEN_SECRET: process.env.JWT_REFRESH_TOKEN_SECRET
+    ...attachJwtPayloadToContext(req.headers[HEADER_NAME])
   })
 });
 

@@ -1,31 +1,22 @@
-import jwt from 'jsonwebtoken';
+import {sign} from './jwt-module';
 
-export const generateNewTokenPair = async (ACCESS_TOKEN_SECRET, REFRESH_TOKEN_SECRET) => {
-    const alg = "HS512"
-    const iss = "imtheissuerforallthetokens"
-    const aud = "someclientid"
-
-    const newAccessToken = jwt.sign({
-            roles: ['ADMIN', 'EDITOR']
-        }, 
-        ACCESS_TOKEN_SECRET,
-        {
-            algorithm: alg,
-            issuer: iss,
-            audience: aud,
-            expiresIn: "1d",
-            subject: "12398hbjf8hf3uf9"
-
-        })
+export const generateNewTokenPair = async () => {
+    const payload = { roles: ['ADMIN', 'EDITOR'] }
+    const accessTokenOptions = {
+        iss: "localhost",
+        aud: "client",
+        exp: "1d",
+        sub: "1"
+    }
+    const refreshTokenOptions = {
+        iss: "localhost",
+        aud: "client",
+        exp: "7d",
+        sub: "1"
+    }
     
-    const newRefreshToken = jwt.sign({}, 
-        REFRESH_TOKEN_SECRET,
-        {
-            algorithm: alg,
-            issuer: iss,
-            audience: aud,
-            expiresIn: "5d",
-        })
+    const newAccessToken = sign(payload, accessTokenOptions)
+    const newRefreshToken = sign(payload, refreshTokenOptions)
 
     return {
       accessToken: newAccessToken,
