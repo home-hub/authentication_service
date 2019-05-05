@@ -1,4 +1,5 @@
-import {sign} from './jwt-module';
+import { sign } from './jwt-module';
+import { privateKey } from '../config'
 
 export const generateNewTokenPair = async () => {
     const payload = { roles: ['ADMIN', 'EDITOR'] }
@@ -15,8 +16,8 @@ export const generateNewTokenPair = async () => {
         sub: "1"
     }
     
-    const newAccessToken = sign(payload, accessTokenOptions)
-    const newRefreshToken = sign(payload, refreshTokenOptions)
+    const newAccessToken = sign(payload, privateKey, accessTokenOptions)
+    const newRefreshToken = sign(payload, privateKey, refreshTokenOptions)
 
     return {
       accessToken: newAccessToken,

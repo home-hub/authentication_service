@@ -1,4 +1,5 @@
 import { verify } from './jwt-module';
+import { publicKey } from '../config'
 import { UnauthorizedClientError } from './errors';
 
 const attachJwtPayloadToContext = (token) => {
@@ -9,7 +10,7 @@ const attachJwtPayloadToContext = (token) => {
         exp: '1d'
     }
     try {
-        const jwtPayload = verify(token, options);
+        const jwtPayload = verify(token, publicKey, options);
         return {
             user: {
                sub: jwtPayload.sub,

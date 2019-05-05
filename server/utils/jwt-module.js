@@ -1,11 +1,6 @@
-import fs from 'fs';
 import jwt from 'jsonwebtoken';
-import {UnauthorizedClientError} from './errors'
 
-const privateKey = fs.readFileSync('./private.key', 'utf8')
-const publicKey = fs.readFileSync('./public.key', 'utf8')
-
-export const sign = (payload, options) => {
+export const sign = (payload, privateKey, options) => {
   const signOptions = {
     issuer: options.iss,
     subject: options.sub,
@@ -17,7 +12,7 @@ export const sign = (payload, options) => {
   return jwt.sign(payload, privateKey, signOptions)
 }
 
-export const verify = (token, options) => {
+export const verify = (token, publicKey, options) => {
   const verifyOptions = {
     issuer: options.iss,
     subject: options.sub,
