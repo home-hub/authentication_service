@@ -1,12 +1,14 @@
 import { ApolloServer } from 'apollo-server';
 import dotenv from 'dotenv';
+import config from './mongo/config'
+import database from './mongo/database';
 import { typeDefs, resolvers } from './graphql/schema';
 import attachJwtPayloadToContext from './utils/authorize';
 
 dotenv.config()
 
-const ACCESS_TOKEN_SECRET = process.env.JWT_ACCESS_TOKEN_SECRET;
-const REFRESH_TOKEN_SECRET = process.env.JWT_REFRESH_TOKEN_SECRET;
+// Create a connection to the MongoDB
+database.connect(config.dbHost, config.dbName, config.dbPort);
 
 const HEADER_NAME = 'authorization'
 
@@ -15,8 +17,8 @@ const server = new ApolloServer({
   resolvers,
   context: ({ req }) => ({
     ...attachJwtPayloadToContext(ACCESS_TOKEN_SECRET, req.headers[HEADER_NAME]),
-    ACCESS_TOKEN_SECRET,
-    REFRESH_TOKEN_SECRET
+    ACCESS_TOKEN_SECRET: process.env.JWT_ACCESS_TOKEN_SECRET ,
+    REFRESH_TOKEN_SECRET: process.env.JWT_REFRESH_TOKEN_SECRET
   })
 });
 
