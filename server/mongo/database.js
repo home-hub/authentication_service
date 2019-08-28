@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import fs from 'fs'
 
 const connect = (dbHost, dbName, dbPort) => {
     const url = `mongodb://${dbHost}:${dbPort}/${dbName}`;
@@ -18,4 +19,16 @@ const connect = (dbHost, dbName, dbPort) => {
     mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 };
 
-export default { connect };
+const models = {}
+const path = `${__dirname}/models`
+    
+fs.readdirSync(path).filter(file => {
+    return  (file.indexOf('.') !== 0) && 
+            (file.slice(-3) === '.js')
+}).forEach(file => {
+    const modelName = file.slice(0, -3)
+    return models[modelName] = require(path + '/' + file)
+})
+
+
+export default { connect, models };

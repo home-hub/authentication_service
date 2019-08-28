@@ -1,26 +1,31 @@
 import { sign } from './jwt-module';
-import { privateKey } from '../config'
+import config from '../config';
 
-export const generateNewTokenPair = async () => {
-    const payload = { roles: ['ADMIN', 'EDITOR'] }
-    const accessTokenOptions = {
-        iss: "localhost",
-        aud: "client",
-        exp: "1d",
-        sub: "1"
-    }
+export const generateAccessToken = async (user) => {
+  const payload = {
+    name: "accessToken",
+    roles: ['ADMIN', 'EDITOR']
+  }
+
+  const accessTokenOptions = { 
+      iss: "localhost",
+      aud: "client",
+      exp: "1d",
+      sub: user.id
+  }
+  
+  return sign(payload, config.privateKey, accessTokenOptions)
+
+};
+
+export const generateRefreshToken = async (user) => {
+    const payload = {name: "refreshToken"}
     const refreshTokenOptions = {
         iss: "localhost",
         aud: "client",
         exp: "7d",
-        sub: "1"
+        sub: user.id
     }
-    
-    const newAccessToken = sign(payload, privateKey, accessTokenOptions)
-    const newRefreshToken = sign(payload, privateKey, refreshTokenOptions)
-
-    return {
-      accessToken: newAccessToken,
-      refreshToken: newRefreshToken,
-    };
+  
+    return sign(payload, config.privateKey, refreshTokenOptions)
   };

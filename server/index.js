@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server';
 import dotenv from 'dotenv';
-import config from './mongo/config'
+import config from './config'
 import database from './mongo/database';
 import { typeDefs, resolvers } from './graphql/schema';
 import attachJwtPayloadToContext from './utils/authorize';
@@ -16,7 +16,9 @@ const server = new ApolloServer({
   typeDefs, 
   resolvers,
   context: ({ req }) => ({
-    ...attachJwtPayloadToContext(req.headers[HEADER_NAME])
+    ...attachJwtPayloadToContext(req.headers[HEADER_NAME]),
+    models: database.models.ApolloServer,
+    req
   })
 });
 
